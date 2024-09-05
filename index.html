@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compliance Report System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Login Form -->
+    <div id="loginForm" class="flex items-center justify-center min-h-screen">
+      <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
+        <form id="login" class="space-y-6">
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" id="username" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
+          </div>
+          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="appContent" class="hidden">
+      <nav class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <h1 class="text-2xl font-bold">Compliance Report System</h1>
+          <div class="flex items-center">
+            <span id="userInfo" class="mr-4"></span>
+            <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="container mx-auto mt-6 p-6 bg-white rounded-lg shadow-md">
+        <!-- Report Form -->
+        <form id="reportForm" class="mb-8">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+              <label for="reportName" class="block text-sm font-medium text-gray-700">Report Name</label>
+              <input type="text" id="reportName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
+            </div>
+            <div>
+              <label for="dueDate" class="block text-sm font-medium text-gray-700">Due Date</label>
+              <input type="date" id="dueDate" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
+            </div>
+            <div>
+              <label for="responsibleGroup" class="block text-sm font-medium text-gray-700">Responsible Group</label>
+              <select id="responsibleGroup" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                <option value="">Select a group</option>
+                <option value="CSC">CSC</option>
+                <option value="IA">IA</option>
+                <option value="SPRM">SPRM</option>
+                <option value="RND">RND</option>
+                <option value="BDRA">BDRA</option>
+                <option value="CCC">CCC</option>
+                <option value="HCCS">HCCS</option>
+                <option value="FA">FA</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Add Report</button>
+        </form>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap justify-between items-center mb-6">
+          <h2 class="text-xl font-bold text-gray-800">Report List</h2>
+          <div class="flex flex-wrap items-center space-x-4">
+            <div>
+              <label for="yearFilter" class="mr-2 text-sm font-medium text-gray-700">Filter by Year:</label>
+              <select id="yearFilter" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="all">All Years</option>
+              </select>
+            </div>
+            <div>
+              <label for="monthFilter" class="mr-2 text-sm font-medium text-gray-700">Filter by Month:</label>
+              <select id="monthFilter" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="all">All Months</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div>
+              <label for="groupFilter" class="mr-2 text-sm font-medium text-gray-700">Filter by Group:</label>
+              <select id="groupFilter" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="all">All Groups</option>
+                <option value="CSC">CSC</option>
+                <option value="IA">IA</option>
+                <option value="SPRM">SPRM</option>
+                <option value="RND">RND</option>
+                <option value="BDRA">BDRA</option>
+                <option value="CCC">CCC</option>
+                <option value="HCCS">HCCS</option>
+                <option value="FA">FA</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Report Name</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsible Group</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reportList">
+              <!-- Report items will be added here -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal for alerts -->
+    <div id="alertModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle"></h3>
+          <div class="mt-2 px-7 py-3">
+            <p class="text-sm text-gray-500" id="modalContent"></p>
+          </div>
+          <div class="items-center px-4 py-3">
+            <button id="closeModal" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Users and Reports (dummy for demo)
+      const users = {
+        admin: { password: "admin", role: "admin" },
+        user: { password: "Sementara", role: "user" },
+      };
+
+      let reports = JSON.parse(localStorage.getItem("reports")) || [];
+      let currentUser = null;
+
+      // Security improvement: hash password before authentication
+      function hashPassword(password) {
+        return btoa(password); // Basic hash for demo, replace with better hashing
+      }
+
+      function saveReportsToLocalStorage() {
+        localStorage.setItem("reports", JSON.stringify(reports));
+      }
+
+      // Modularized Login function
+      function login(username, password) {
+        const hashedPassword = hashPassword(password);
+        if (users[username] && hashPassword(users[username].password) === hashedPassword) {
+          currentUser = { username, role: users[username].role };
+          document.getElementById("loginForm").classList.add("hidden");
+          document.getElementById("appContent").classList.remove("hidden");
+          document.getElementById("userInfo").textContent = `Logged in as: ${username} (${users[username].role})`;
+          updateReportList();
+        } else {
+          showAlert("Invalid username or password");
+        }
+      }
+
+      function logout() {
+        currentUser = null;
+        document.getElementById("loginForm").classList.remove("hidden");
+        document.getElementById("appContent").classList.add("hidden");
+        document.getElementById("login").reset();
+      }
+
+      function addReport(name, dueDate, group) {
+        reports.push({ name, dueDate, group, done: false, createdAt: new Date() });
+        saveReportsToLocalStorage();
+        updateReportList();
+      }
+
+      function removeReport(index) {
+        reports.splice(index, 1);
+        saveReportsToLocalStorage();
+        updateReportList();
+      }
+
+      // Modularized function to update report list
+      function updateReportList() {
+        const reportList = document.getElementById("reportList");
+        const selectedMonth = document.getElementById("monthFilter").value;
+        const selectedGroup = document.getElementById("groupFilter").value;
+        const selectedYear = document.getElementById("yearFilter").value;
+        reportList.innerHTML = "";
+
+        let urgentReports = [];
+        let warningReports = [];
+
+        reports.forEach((report, index) => {
+          const dueDate = new Date(report.dueDate);
+          const reportMonth = dueDate.getMonth() + 1;
+          const reportYear = dueDate.getFullYear();
+
+          if ((selectedMonth === "all" || parseInt(selectedMonth) === reportMonth) &&
+              (selectedGroup === "all" || selectedGroup === report.group) &&
+              (selectedYear === "all" || selectedYear == reportYear)) {
+            const today = new Date();
+            const timeDiff = dueDate.getTime() - today.getTime();
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            const row = document.createElement("tr");
+            let statusClass = "";
+            let statusText = "";
+
+            if (daysDiff <= 3 && daysDiff >= 0) {
+              statusClass = "bg-red-100 text-red-800";
+              statusText = "Urgent";
+              urgentReports.push(report);
+            } else if (daysDiff <= 7 && daysDiff > 3) {
+              statusClass = "bg-yellow-100 text-yellow-800";
+              statusText = "Warning";
+              warningReports.push(report);
+            } else if (daysDiff < 0) {
+              statusClass = "bg-gray-100 text-gray-800";
+              statusText = "Overdue";
+            } else {
+              statusClass = "bg-green-100 text-green-800";
+              statusText = "On Track";
+            }
+
+            row.innerHTML = `
+              <td class="border px-4 py-2">${report.name}</td>
+              <td class="border px-4 py-2">${report.dueDate}</td>
+              <td class="border px-4 py-2">${report.group}</td>
+              <td class="border px-4 py-2">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">${statusText}</span>
+              </td>
+              <td class="border px-4 py-2 text-center">
+                ${currentUser.role === "admin" ? `<button onclick="removeReport(${index})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>` : ""}
+              </td>
+            `;
+            reportList.appendChild(row);
+          }
+        });
+
+        if (urgentReports.length > 0 || warningReports.length > 0) {
+          showAlertModal(urgentReports, warningReports);
+        }
+      }
+
+      // Modal handler for alerts
+      function showAlertModal(urgentReports, warningReports) {
+        const modal = document.getElementById("alertModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalContent = document.getElementById("modalContent");
+
+        let content = "";
+        if (urgentReports.length > 0) {
+          content += '<p class="font-bold text-red-500">Urgent Reports (Due within 3 days):</p>';
+          content += '<ul class="list-disc list-inside">';
+          urgentReports.forEach((report) => {
+            content += `<li>${report.name} - Due: ${report.dueDate}</li>`;
+          });
+          content += "</ul>";
+        }
+
+        if (warningReports.length > 0) {
+          if (content) content += "<br>";
+          content += '<p class="font-bold text-yellow-500">Warning Reports (Due within 7 days):</p>';
+          content += '<ul class="list-disc list-inside">';
+          warningReports.forEach((report) => {
+            content += `<li>${report.name} - Due: ${report.dueDate}</li>`;
+          });
+          content += "</ul>";
+        }
+
+        modalTitle.textContent = "Reports Alert";
+        modalContent.innerHTML = content;
+        modal.classList.remove("hidden");
+      }
+
+      // Event Listeners
+      document.getElementById("login").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        login(username, password);
+      });
+
+      document.getElementById("reportForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const reportName = document.getElementById("reportName").value;
+        const dueDate = document.getElementById("dueDate").value;
+        const responsibleGroup = document.getElementById("responsibleGroup").value;
+        addReport(reportName, dueDate, responsibleGroup);
+      });
+
+      document.getElementById("logoutBtn").addEventListener("click", logout);
+      document.getElementById("closeModal").addEventListener("click", () => {
+        const modal = document.getElementById("alertModal");
+        modal.classList.add("hidden");
+      });
+
+      document.getElementById("monthFilter").addEventListener("change", updateReportList);
+      document.getElementById("groupFilter").addEventListener("change", updateReportList);
+      document.getElementById("yearFilter").addEventListener("change", updateReportList);
+
+      // Populate year filter on page load
+      window.onload = function() {
+        const yearFilter = document.getElementById("yearFilter");
+        for (let year = 2024; year <= 2035; year++) {
+          const option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          yearFilter.appendChild(option);
+        }
+      };
+    </script>
+  </body>
+</html>
